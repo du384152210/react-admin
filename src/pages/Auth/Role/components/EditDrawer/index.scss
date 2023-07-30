@@ -1,0 +1,21 @@
+.tree-box {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 16px;
+}
+.edit-drawer {
+  .ant-drawer-body {
+    padding-bottom: 58px;
+  }
+  .drawer-btns {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    justify-content: flex-end;
+    border-top: 1px solid #dddddd;
+    box-shadow: 10px 10px 10px 10px #d9d9d9;
+  }
+}

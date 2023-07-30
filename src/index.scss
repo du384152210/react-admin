@@ -1,0 +1,67 @@
+$primaryColor: #3ba0e9;
+$warningColor: #faad14;
+$errorColor: #ff4d4f;
+$gray: #dddddd;
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.mt-15 {
+  margin-top: 15px;
+}
+.p-15 {
+  padding: 15px;
+}
+.m-8 {
+  margin: 8px;
+}
+.flex {
+  display: flex;
+}
+.f-j-c {
+  justify-content: center;
+}
+.f-j-s {
+  justify-content: space-between;
+}
+.f-a-c {
+  align-items: center;
+}
+p {
+  padding: 0;
+  margin: 0;
+}
+.c-gray {
+  color: $gray!important;
+}
+.c-primary {
+  color: $primaryColor!important;
+}
+.c-warning {
+  color: $warningColor!important;
+}
+.c-error {
+  color: $errorColor!important;
+}
+.bg-primary {
+  background: rgba(127, 238, 238, 0.1)!important;
+}
+.bg-warning {
+  background: rgb(235, 186, 88,.1)!important;
+}
+.flx-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ant-space {
+  flex-wrap: wrap;
+}

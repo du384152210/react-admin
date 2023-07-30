@@ -1,0 +1,36 @@
+.classic-container {
+  height: 100vh;
+  .header-lf {
+    padding-left:  20px;
+    display: flex;
+    align-items: center;
+    .logo {
+      .logo-img {
+        width: 28px;
+        object-fit: contain;
+        margin-right: 6px;
+      }
+      .logo-text {
+        font-size: 21.5px;
+        font-weight: bold;
+        color: #333333;
+        white-space: nowrap;
+        margin-right: 20px;
+      }
+    }
+  }
+  .headerStyle {
+    color: #fff;
+    height: 50px;
+    line-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 0;
+    padding-right: 20px;
+  }
+  .scrollbar {
+    height: 100%;
+    overflow: auto;
+  }
+}
