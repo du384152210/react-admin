@@ -34,6 +34,9 @@ body {
 .f-a-c {
   align-items: center;
 }
+.f-wrap {
+  flex-wrap: wrap;
+}
 p {
   padding: 0;
   margin: 0;
@@ -60,6 +63,17 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.drawer-bottom-btns {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  justify-content: flex-end;
+  border-top: 1px solid #dddddd;
+  box-shadow: 14px 10px 10px 10px #d9d9d9;
 }
 
 .ant-space {

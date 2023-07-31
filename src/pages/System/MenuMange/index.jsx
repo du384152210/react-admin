@@ -1,13 +1,14 @@
-import React, {useMemo,useState} from 'react';
+import React, { useMemo, useState } from 'react';
 import './index.scss';
-import { Row, Col, Card,Space,Button,Divider,Input, Tree, Form, Select, InputNumber, Radio, Switch, TreeSelect } from 'antd';
+import AddDrawer from './components/AddDrawer';
+import SelectIcon from '@/components/SelectIcon'
+import { Row, Col, Card, Space, Button, Divider, Input, Tree, Form, InputNumber, Radio, Switch, TreeSelect } from 'antd';
 import {AlignLeftOutlined, FileAddOutlined} from '@ant-design/icons';
-import { useSelector, useDispatch } from 'react-redux';
-import { setGlobalState } from '@/store/modules/global';
-import {initTree, initSelectTree} from '@/utils'
+import { useSelector } from 'react-redux';
+import {initTree, initSelectTree} from '@/utils';
 
 const { Search } = Input;
-const { Option } = Select;
+
 // 获取包含的key值
 const getParentKey = (key, tree) => {
   let parentKey;
@@ -27,52 +28,17 @@ const getParentKey = (key, tree) => {
 
 export default function MenuMange() {
   const menuList = useSelector(state => state.auth.authMenuList);
-  const defaultData = initTree(menuList); // 初始化菜单数组
+  const defaultData = initTree(menuList, 'id','label','children'); // 初始化菜单数组
   const [expandedKeys, setExpandedKeys] = useState([]); // tree展开key
   const [searchValue, setSearchValue] = useState(''); // 搜索值
   const [autoExpandParent, setAutoExpandParent] = useState(true); // 是否自动展开
-  const [showAll, setShowAll] = useState(false); //全部展开/收起
+  const [showAll, setShowAll] = useState(false); // 全部展开/收起
+  const [showDrawer, setShowDrawer] = useState(false); // drawer显示
+  const [showIcon, setShowIconr] = useState(false); // Icon选择显示
+  const [icon, setIcon] = useState(); // Icon选择显示
   const allDataList = []; 
   generateList(defaultData); // 扁平化
 
-  const selectTreeData = initSelectTree(defaultData, 'key', 'title', 'children');
-  console.log(selectTreeData);
-  // 手动展开tree
-  const onExpand = (newExpandedKeys) => {
-    setExpandedKeys(newExpandedKeys);
-    setAutoExpandParent(false);
-  };
-  // 监听输入框
-  const onChange = (e) => {
-    const { value } = e.target;
-    const newExpandedKeys = allDataList.map((item) => {
-        if (item.title.indexOf(value) > -1) {
-          return getParentKey(item.key, defaultData);
-        }
-        return null;
-      })
-      .filter((item, i, self) => item && self.indexOf(item) === i);
-      console.log(newExpandedKeys);
-    setExpandedKeys(newExpandedKeys);
-    setSearchValue(value);
-    setAutoExpandParent(true);
-  };
-  // 展示全部
-  const handleShowAll = () => {
-    if(showAll) {
-      setExpandedKeys([])
-      setShowAll(false)
-    }else {
-      let arr = [];
-      allDataList.forEach(item => {
-        arr.push(item.key)
-      })
-      setExpandedKeys(arr)
-      setShowAll(true)
-    }
-    
-  }
-  
   const treeData = useMemo(() => {
     const loop = (data) =>
       data.map((item) => {
@@ -105,6 +71,54 @@ export default function MenuMange() {
     return loop(defaultData);
   }, [searchValue,defaultData]);
 
+  const selectTreeData = initSelectTree(defaultData, 'key', 'title', 'children');
+  // 手动展开tree
+  const onExpand = (newExpandedKeys) => {
+    setExpandedKeys(newExpandedKeys);
+    setAutoExpandParent(false);
+  };
+  // 监听输入框
+  const onChange = (e) => {
+    const { value } = e.target;
+    const newExpandedKeys = allDataList.map((item) => {
+        if (item.title.indexOf(value) > -1) {
+          return getParentKey(item.key, defaultData);
+        }
+        return null;
+      })
+      .filter((item, i, self) => item && self.indexOf(item) === i);
+    setExpandedKeys(newExpandedKeys);
+    setSearchValue(value);
+    setAutoExpandParent(true);
+  };
+  // 展示全部
+  const handleShowAll = () => {
+    if(showAll) {
+      setExpandedKeys([])
+      setShowAll(false)
+    }else {
+      let arr = [];
+      allDataList.forEach(item => {
+        arr.push(item.key)
+      })
+      setExpandedKeys(arr)
+      setShowAll(true)
+    }
+    
+  }
+  // 关闭drawer
+  const onCloseDrawer = (val) => {
+    setShowDrawer(val)
+  }
+  const handleSelIcon = () => {
+    setShowIconr(true)
+  }
+  const onCloseIconModel = (key) => {
+    setShowIconr(false)
+    if(key) setIcon(key)
+  }
+ 
+
   // 另存一份不带层级 allDataList 用于搜索
   function generateList (data) {
     for (let i = 0; i < data.length; i++) {
@@ -126,7 +140,7 @@ export default function MenuMange() {
         <Card>
           <div className='MenuMange-left'>
             <Space>
-              <Button type="primary" icon=<FileAddOutlined />>添加菜单</Button>
+              <Button type="primary" icon=<FileAddOutlined /> onClick={() => onCloseDrawer(true)}>添加菜单</Button>
               <Button type="primary" ghost icon=<AlignLeftOutlined /> onClick={handleShowAll}>{showAll? '全部收起' : '全部展开'}</Button>
             </Space>
           </div>
@@ -151,14 +165,9 @@ export default function MenuMange() {
         extra={<Button type="link">删除目录</Button>}
         >
           <Form 
-             style={{ maxWidth: 600,}}
-            //  layout='inline'
-            labelCol={{
-              span: 4,
-            }}
-            wrapperCol={{
-              span: 20,
-            }}
+            style={{ maxWidth: 600,}}
+            labelCol={{ span: 4, }}
+            wrapperCol={{ span: 20 }}
           >
             <Divider orientation="left" style={{marginTop: 0}}>基本设置</Divider>
             <Form.Item
@@ -166,23 +175,13 @@ export default function MenuMange() {
               label="上级目录"
             >
               <TreeSelect showSearch allowClear treeData={selectTreeData}/>
-              {/* <Select
-                placeholder="Select a option and change input text above"
-                // onChange={onGenderChange}
-                allowClear
-              >
-                <Option value="male">male</Option>
-                <Option value="female">female</Option>
-                <Option value="other">other</Option>
-              </Select> */}
             </Form.Item>
-          
             <div className='flex f-j-s item-row'>
               <Form.Item label="标题" labelCol={{span:8}} wrapperCol={{span: 16,}}>
                 <Input/>
               </Form.Item>
               <Form.Item label="图标名称" labelCol={{span:8}} wrapperCol={{span: 16,}}>
-                <Input/>
+                <Input onClick={handleSelIcon} value={icon} readOnly/>
               </Form.Item>
             </div>
             <div className='flex f-j-s item-row'>
@@ -218,11 +217,16 @@ export default function MenuMange() {
                 <Switch/>
               </Form.Item>
             </div>
+            <Form.Item style={{textAlign: 'center'}}>
+                <Button type='primary'>保存修改</Button>
+            </Form.Item>
           </Form>
           
           
         </Card>
       </Col>
+      <AddDrawer show={showDrawer} selectTreeData={selectTreeData} close={onCloseDrawer}/>
+      <SelectIcon show={showIcon} close={onCloseIconModel}/>
     </Row>
   )
 }
