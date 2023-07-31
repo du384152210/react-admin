@@ -17,14 +17,14 @@ export default function AddDrawer(props) {
   }
   const addMenuApi = async()=> {
     let obj = {
-      "parent_id": 0, //父级
-      "level": 1, //级别
-      "path": "/component", //路由
-      "name": "component", //组件名
-      "component": "/component/index", //组件路劲
+      "parent_id": 14, //父级
+      "level": 2, //级别
+      "path": "/component/selectIcon", //路由
+      "name": "selectIcon", //组件名
+      "component": "/component/selectIcon/index", //组件路劲
       "meta": {
-      "icon": "PartitionOutlined", //ico图标
-      "title": "组件", //标题
+      "icon": "GoldOutlined", //ico图标
+      "title": "图标选择", //标题
       "isLink": false, //是否跳转（true：是；false：否）
       "isHide": false, //是否隐藏（true：是；false：否）；
       "isFull": true, //是否填充（true：是；false：否）
@@ -34,11 +34,11 @@ export default function AddDrawer(props) {
       "auth_botton": [
       "add"
       ], //按钮权限
-      "label": "组件", //label 值
+      "label": "图标选择", //label 值
       "is_show": 1, //是否展示（1：显示；2：隐藏）
       "sort": 99 //排序（默认99）
       }
-    const res = await addMenu({params: obj})
+    const res = await addMenu({data: obj})
     console.log(res);
   }
   return (
@@ -62,18 +62,18 @@ export default function AddDrawer(props) {
           <Form.Item 
           label="标题" name="label" 
           labelCol={{span:8}} wrapperCol={{span: 16}}
-          rules={[
-            { required: true, message: '请填写标题' },
-          ]}
+          // rules={[
+          //   { required: true, message: '请填写标题' },
+          // ]}
           >
             <Input/>
           </Form.Item>
           <Form.Item 
           label="图标名称" name="icon" 
           labelCol={{span:8}} wrapperCol={{span: 16}}
-          rules={[
-            { required: true, message: '请选择图标名称' },
-          ]}
+          // rules={[
+          //   { required: true, message: '请选择图标名称' },
+          // ]}
           >
             <Input readOnly/>
           </Form.Item>

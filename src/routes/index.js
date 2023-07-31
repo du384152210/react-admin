@@ -14,6 +14,7 @@ const Cate = lazy(() => import('@/pages/Product/Cate'));
 const Layouts = lazy(() => import('@/layouts'));
 const Role = lazy(() => import('@/pages/Auth/Role'));
 const MenuMange = lazy(() => import('@/pages/System/MenuMange'))
+const SelIconPage = lazy(() => import('@/pages/component/selectIcon'))
 
 
 const Router = () => {
@@ -29,6 +30,7 @@ const Router = () => {
           <Route path='/home/index' index element={<Home />}></Route>
           <Route path='/account/listTable' element={<Role />}></Route>
           <Route path='/system/menuMange' element={<MenuMange />}></Route>
+          <Route path='/component/selectIcon' element={<SelIconPage />}></Route>
 
           <Route path='/home/dra' element={<ViewPart />}></Route>
           <Route path='account/l' element={<Account />}></Route>
