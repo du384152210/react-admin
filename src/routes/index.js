@@ -27,12 +27,13 @@ const Router = () => {
     }>
       <Routes>
         <Route path='/' element={<AuthorComponent><Layouts/></AuthorComponent>}>
+          
           <Route path='/home/index' index element={<Home />}></Route>
           <Route path='/account/listTable' element={<Role />}></Route>
           <Route path='/system/menuMange' element={<MenuMange />}></Route>
           <Route path='/component/selectIcon' element={<SelIconPage />}></Route>
 
-          <Route path='/home/dra' element={<ViewPart />}></Route>
+          <Route path='/dashboard/viewOne' element={<ViewPart />}></Route>
           <Route path='account/l' element={<Account />}></Route>
           <Route path='/users/account/edit' element={<AccountEdit />}></Route>
           <Route path='/product/cate' element={<Cate />}></Route>

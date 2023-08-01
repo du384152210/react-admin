@@ -8,7 +8,6 @@ import logo from '@/assets/logo-react.png';
 import './index.scss';
 import { initMenu } from '@/utils';
 
-
 const { Header } = Layout;
 
 export default function LayoutTransverse() {
@@ -20,7 +19,7 @@ export default function LayoutTransverse() {
   return (
     <Layout className='transcerse-container'>
       <Header style={{ background: colorBgContainer }} className='headerStyle'>
-        <div className='flex f-a-c ' style={{maxWidth: '60%'}}>
+        <div className='flex f-a-c ' style={{width: '60%'}}>
           <div className="logo flx-center">
             <img className="logo-img" src={logo} alt="logo" />
             <span className="logo-text">{ title }</span>

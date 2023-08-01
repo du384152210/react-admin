@@ -13,6 +13,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.t-c {
+  text-align: center;
+}
 .mt-15 {
   margin-top: 15px;
 }
@@ -52,6 +55,20 @@ p {
 }
 .c-error {
   color: $errorColor!important;
+}
+::-webkit-scrollbar {
+  width: 8px; /* 设置滚动条的宽度 */
+  height: 8px;
+}/* 设置滚动条的轨道（背景）样式 */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* 设置轨道的背景颜色 */
+}/* 设置滚动条的滑块（滚动条）样式 */
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #878789; /* 设置滑块的背景颜色 */
+}/* 设置滚动条滑块的hover样式 */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* 设置滑块的hover背景颜色 */
 }
 .bg-primary {
   background: rgba(127, 238, 238, 0.1)!important;
