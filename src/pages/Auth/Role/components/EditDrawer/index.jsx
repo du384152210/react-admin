@@ -1,94 +1,80 @@
-import React, { useEffect, useRef} from 'react';
+import React, { useEffect, useRef, useState} from 'react';
 import { Drawer, Form, Input, Space, Tree, Checkbox, Divider, Button } from 'antd';
 import './index.scss'
 
+
+// 样式
+const layout = {
+  labelCol: {
+    span: 6,
+  },
+  wrapperCol: {
+    span: 18,
+  },
+};
+
 export default function EditDrawer(props) {
-  const {data ,show } = props;
-  const treeData = [
-    {
-      title: '0-0',
-      key: '0-0',
-      children: [
-        {
-          title: '0-0-0',
-          key: '0-0-0',
-          children: [
-            {
-              title: '0-0-0-0',
-              key: '0-0-0-0',
-            },
-            {
-              title: '0-0-0-1',
-              key: '0-0-0-1',
-            },
-            {
-              title: '0-0-0-2',
-              key: '0-0-0-2',
-            },
-          ],
-        },
-        {
-          title: '0-0-1',
-          key: '0-0-1',
-          children: [
-            {
-              title: '0-0-1-0',
-              key: '0-0-1-0',
-            },
-            {
-              title: '0-0-1-1',
-              key: '0-0-1-1',
-            },
-            {
-              title: '0-0-1-2',
-              key: '0-0-1-2',
-            },
-          ],
-        },
-        {
-          title: '0-0-2',
-          key: '0-0-2',
-        },
-      ],
-    },
-    {
-      title: '0-1',
-      key: '0-1',
-      children: [
-        {
-          title: '0-1-0-0',
-          key: '0-1-0-0',
-        },
-        {
-          title: '0-1-0-1',
-          key: '0-1-0-1',
-        },
-        {
-          title: '0-1-0-2',
-          key: '0-1-0-2',
-        },
-      ],
-    },
-    {
-      title: '0-2',
-      key: '0-2',
-    },
-  ];
-  const layout = {
-    labelCol: {
-      span: 6,
-    },
-    wrapperCol: {
-      span: 18,
-    },
+  const {data ,show, tree } = props;
+  const [expandedKeys, setExpandedKeys] = useState([]); // tree展开key
+  const [checkedKeys, setCheckedKeys] = useState([]); // tree选中key
+  const [autoExpandParent, setAutoExpandParent] = useState(true); // 是否自动展开
+  const allDataList = [];
+  // 另存一份不带层级 allDataList 用于搜索
+  function generateList (data) {
+    for (let i = 0; i < data.length; i++) {
+      const node = data[i];
+      const { key,title } = node;
+      allDataList.push({
+        key,
+        title,
+      });
+      if (node.children) {
+        generateList(node.children);
+      }
+    }
   };
-  const editForm = useRef(null)
+  generateList(tree);
+  console.log(allDataList);
+  
+  const editForm = useRef(null);
+
   useEffect(() => {
     editForm && editForm.current && editForm.current.resetFields();
   },[props.data])
+
   const onClose =() => {
-    props.handleClose()
+    props.handleClose();
   }
+  // 展开/收起
+  const onShowAll = (e) => {
+    if(e.target.checked) {
+      let arr = [];
+      allDataList.forEach(item => {
+        arr.push(item.key);
+      })
+      setExpandedKeys(arr);
+    }else {
+      setExpandedKeys([]);
+    }
+  }
+  // 是否全选
+  const onSelectAll = (e) => {
+    if(e.target.checked) {
+      let arr = [];
+      allDataList.forEach(item => {
+        arr.push(item.key);
+      })
+      setCheckedKeys(arr);
+    }else {
+      setCheckedKeys([])
+    }
+  }
+  // 手动展开tree
+  const onExpand = (newExpandedKeys) => {
+    setExpandedKeys(newExpandedKeys);
+    setAutoExpandParent(false);
+  };
+
   return (
     <Drawer 
     className='edit-drawer'
@@ -125,11 +111,18 @@ export default function EditDrawer(props) {
         >
           <div className='tree-box'>
             <Space style={{width: '100%'}} className='f-j-c'>
-              <Checkbox >展开/收起</Checkbox>
-              <Checkbox >全选/全不选</Checkbox>
+              <Checkbox onChange={onShowAll}>展开/收起</Checkbox>
+              <Checkbox onChange={onSelectAll}>全选/全不选</Checkbox>
             </Space>
             <Divider />
-            <Tree treeData={treeData} checkable></Tree>
+            <Tree 
+            treeData={tree} 
+            checkable 
+            onExpand={onExpand}
+            expandedKeys={expandedKeys}
+            checkedKeys={checkedKeys}
+            autoExpandParent={autoExpandParent}
+            ></Tree>
           </div>
           
         </Form.Item>

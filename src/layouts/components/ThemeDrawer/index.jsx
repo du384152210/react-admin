@@ -59,7 +59,7 @@ export default function ThemeDrawer() {
             }
           </div>
         </Tooltip>
-        <Tooltip title="分栏">
+        {/* <Tooltip title="分栏">
           <div className={['layout-item ','layout-columns ', layout === 'columns' ? 'is-active': ''].join('')} onClick={() => setLayout('columns')}>
           <div className="layout-dark"></div>
           <div className="layout-light"></div>
@@ -68,7 +68,7 @@ export default function ThemeDrawer() {
               layout === 'columns' ?<CheckCircleOutlined className='icon'/>: ''
             }
           </div>
-        </Tooltip>
+        </Tooltip> */}
       </div>
       {/* 全局主题 */}
       <Divider>

@@ -11,7 +11,6 @@ export default function SelectIcon(props) {
 
   const onInput = (e) => {
     setIconList(filter(e.target.value))
-    console.log(iconsList);
   }
   const handleSelIcon = (key) => {
     props.close(key)
@@ -107,7 +106,6 @@ export default function SelectIcon(props) {
           </div>
             </>
           }
-          
       </div>
     </Modal>
   )

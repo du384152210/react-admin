@@ -2,7 +2,9 @@ import React, {useEffect ,useState} from 'react';
 import { Card, Row, Col, Input, Button, Table, Space } from 'antd';
 import {SearchOutlined ,PlusCircleOutlined} from '@ant-design/icons';
 import { roleList } from '@/API/testApi/';
-import EditDrawer from './components/EditDrawer'
+import EditDrawer from './components/EditDrawer';
+import { roleConf } from '@/API/testApi';
+import { initTree } from '@/utils';
 
 export default function Role() {
   const columns = [
@@ -63,10 +65,11 @@ export default function Role() {
     setdrawShow(true)
   }
 
-  const [list, setList] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [editObj, seteditObj] = useState({})
-  const [drawShow, setdrawShow] = useState(false)
+  const [list, setList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [editObj, seteditObj] = useState({});
+  const [drawShow, setdrawShow] = useState(false);
+  const [treeData, setTreeData] = useState([]);
   useEffect(() => {
     const getList = async() => {
       setLoading(true)
@@ -74,21 +77,26 @@ export default function Role() {
       setLoading(false)
       setList(res.data.list.map(item => {return {key: item.id, ...item}}))
     }
+    const getRoleCof = async()=> {
+      const res = await roleConf();
+      setTreeData(initTree(res.menus,'value','label','children'));
+      console.log(treeData);
+    } 
     getList()
+    getRoleCof()
   },[])
   const drawClose = () => {
     setdrawShow(false)
   }
   return (
     <Row gutter={[16,16]}>
-      <EditDrawer data={editObj} show={drawShow} handleClose={drawClose}/>
+      <EditDrawer data={editObj} show={drawShow} handleClose={drawClose} tree={treeData}/>
       <Col span={24}>
         <Card>
         <Space style={{flexWrap: 'wrap'}}>
           <Input style={{ width: 200 }} placeholder="Basic usage" />
           <Button type="primary" shape="circle" icon={<SearchOutlined />} />
         </Space>
-          
         </Card>
       </Col>
       <Col span={24}>

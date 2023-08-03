@@ -11,6 +11,7 @@ function getMenuItem(label, key, icon, children, type) {
     type,
   };
 }
+
 // treeItem
 function getTreeItem( key, title, children,) {
   return {
@@ -44,6 +45,7 @@ function initMenu (list, ...arg) {
 
 /**
  * @description 初始化Tree
+ * @param {*} arg  title,value,children
  */
 function initTree (list, ...arg) {
   if (list && list.length > 0) {

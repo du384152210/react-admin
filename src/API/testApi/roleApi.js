@@ -16,7 +16,16 @@ const addRole = (config => {
   })
 })
 
+const roleConf = (config => {
+  return http({
+    url: '/admin/roles/conf',
+    method: 'POST',
+    ...config
+  })
+})
+
 export {
   roleList,
-  addRole
+  addRole,
+  roleConf
 }

@@ -1,10 +1,16 @@
-import React from 'react';
-import LayoutVertical from './LayoutVertical';
-import LayoutClassic from './LayoutClassic';
-import LayoutTransverse from './LayoutTransverse';
-import LayoutColumns from './LayoutColumns';
-import ThemeDrawer from './components/ThemeDrawer';
+import React, {lazy, Suspense} from 'react';
+// import LayoutVertical from './LayoutVertical';
+// import LayoutClassic from './LayoutClassic';
+// import LayoutTransverse from './LayoutTransverse';
+// import LayoutColumns from './LayoutColumns';
+// import ThemeDrawer from './components/ThemeDrawer';
 import { useSelector } from 'react-redux';
+import Loading from '@/components/Loading';
+
+const LayoutVertical = lazy(() => import('./LayoutVertical'));
+const LayoutClassic = lazy(() => import('./LayoutClassic'));
+const LayoutTransverse = lazy(() => import('./LayoutTransverse'));
+const LayoutColumns = lazy(() => import('./LayoutColumns'));
 
 const component = {
   vertical: () => {return <LayoutVertical/> },
@@ -19,11 +25,12 @@ export default function Layouts() {
 
   
   return (
-    <>
+    <Suspense  fallback={<div style={{ width: '100%', height: '100vh'}}>
+      <Loading />
+      </div>
+    }>
       {component[layout]()}
-      <ThemeDrawer />
-    </>
-    
-    
+      {/* <ThemeDrawer /> */}
+    </Suspense>
   )
 }
