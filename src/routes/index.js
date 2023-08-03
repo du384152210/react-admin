@@ -28,20 +28,18 @@ import MenuMange from '@/pages/System/MenuMange';
 import SelIconPage from '@/pages/component/selectIcon';
 
 console.log(DRoutes);
-// const renderRoutes = (routes) => {
-//   return <>
-//     {
-//       routes.map((route) => {
-//         if(route.component) {
-//           return (
-//           <Route key={route.key} path={route.path} element={<route.component/>}>
-//             {route.children && renderRoutes(route.children)}
-//           </Route>)
-//         }else {return renderRoutes(route.children)}
-//       })
-//     }
-//   </>
-// }
+const renderRoutes = (routes) => {
+  return <>
+    {
+      routes.map((route) => {
+        if(route.component) {
+          return ( <Route key={route.key} path={route.path} element={<route.component/>}></Route>)
+        }
+        return null
+      })
+    }
+  </>
+}
 
 const Router = () => {
 
