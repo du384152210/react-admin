@@ -16,7 +16,7 @@ export default function SelectIcon(props) {
     props.close(key)
   }
   const onclose = () => {
-    props.close()
+    props.onClose()
   }
 
   const filter = (val) => {

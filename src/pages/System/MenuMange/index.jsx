@@ -21,7 +21,6 @@ const getParentKey = (key, tree) => {
         parentKey = getParentKey(key, node.children);
       }
     }
-    // console.log(parentKey);
   }
   return parentKey;
 };

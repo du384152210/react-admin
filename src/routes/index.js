@@ -1,6 +1,6 @@
 
 // import { lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthorComponent } from '@/components/AuthComponent';
 import DRoutes from './dynamicRouter';
 
@@ -18,22 +18,30 @@ import DRoutes from './dynamicRouter';
 
 import Home from '@/pages/Home';
 import Login from '@/pages/Login';
-import Account from '@/pages/Account';
-import AccountEdit from '@/pages/Account/edit';
-import ViewPart from '@/pages/ViewPart';
-import Cate from '@/pages/Product/Cate';
+import ViewOne from '@/pages/Dashboard/viewOne';
+import ViewTwo from '@/pages/Dashboard/viewTwo';
 import Layouts from '@/layouts';
 import Role from '@/pages/Auth/Role';
 import MenuMange from '@/pages/System/MenuMange';
 import SelIconPage from '@/pages/component/selectIcon';
+import Tree from '@/pages/component/tree';
 
-console.log(DRoutes);
+let routeDictionary = {
+  'home': <Home />,
+  'viewOne': <ViewOne />,
+  'viewTwo': <ViewTwo/>,
+  'listTable': <Role />,
+  'selectIcon': <SelIconPage />,
+  'tree': <Tree />,
+  'menuMange': <MenuMange />,
+}
+
 const renderRoutes = (routes) => {
   return <>
     {
       routes.map((route) => {
         if(route.component) {
-          return ( <Route key={route.key} path={route.path} element={<route.component/>}></Route>)
+          return ( <Route key={route.key} path={route.path} element={routeDictionary[route.component]}></Route>)
         }
         return null
       })
@@ -44,29 +52,15 @@ const renderRoutes = (routes) => {
 const Router = () => {
 
   return (
-    // <Suspense fallback={
-    //   <div style={{ width: '100%', height: '100vh'}}>
-    //     <Loading />
-    //   </div>
-    // }>
-      <Routes>
-        <Route path='/' element={<AuthorComponent><Layouts/></AuthorComponent>}>
-          {/* {
-            renderRoutes(DRoutes)
-          } */}
-          <Route path='/home/index' index element={<Home />}></Route>
-          <Route path='/account/listTable' element={<Role />}></Route>
-          <Route path='/system/menuMange' element={<MenuMange />}></Route>
-          <Route path='/component/selectIcon' element={<SelIconPage />}></Route>
-
-          <Route path='/dashboard/viewOne' element={<ViewPart />}></Route>
-          <Route path='account/l' element={<Account />}></Route>
-          <Route path='/users/account/edit' element={<AccountEdit />}></Route>
-          <Route path='/product/cate' element={<Cate />}></Route>
-        </Route>
-        <Route path='/login' element={<Login />}></Route>
-      </Routes>
-    // </Suspense>
+    <Routes>
+      <Route path='/' element={<AuthorComponent><Layouts/></AuthorComponent>}>
+      <Route path='/' element={<Navigate to="/home/index" />}></Route>
+        {
+          renderRoutes(DRoutes)
+        }
+      </Route>
+      <Route path='/login' element={<Login />}></Route>
+    </Routes>
   )
 }
 export default Router

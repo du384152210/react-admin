@@ -1,10 +1,12 @@
-import React, {useState} from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Card, Form, Input, Button, Checkbox, message } from 'antd'
-import './index.scss'
-import logo from '@/assets/logo-react.png'
-import { setToken } from '@/utils'
-import { login } from '@/API/testApi/index'
+import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Form, Input, Button, message } from 'antd';
+import { UserOutlined,RedoOutlined,LockOutlined } from '@ant-design/icons'
+import './index.scss';
+import leftLoginImg from '@/assets/images/login_left.png';
+import logo from '@/assets/images/logo-react.png';
+import { setToken } from '@/utils';
+import { login } from '@/API/testApi/index';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -45,55 +47,68 @@ const Login = () => {
   const onFinishFailed = (data) => {
     console.log(data);
   }
+  const onReset = () => {}
   return (
-    <div className='login'>
-      <Card className='login-container'>
-        <img src={logo} className='login-logo' alt="" />
-        <Form
-          validateTrigger={['onBlur', 'onChange']}
-          name="basic"
-          labelCol={{ span: 5 }}
-          wrapperCol={{ span: 19 }}
-          initialValues={{ remember: false }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item
-            label="账号"
-            name="account"
-            initialValue={user.account}
-            rules={[
-              { required: true, message: 'Please input your phone!' },
-              { maxlen: 10 , message: 'Please input correct phone number!', validateTrigger: 'onBlur' }
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="密码"
-            name="password"
-            initialValue={user.password}
-            rules={[
-              { required: true, message: 'Please input your password!' },
-              // { len: 6, message: 'Please input 6-digit password', validateTrigger: 'onBlur' }
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 0, span: 24 }}>
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-
-          <Form.Item wrapperCol={{ offset: 0, span: 24 }}>
-            <Button type="primary" htmlType="submit">
-              Login
-            </Button>
-          </Form.Item>
-        </Form>
-      </Card>
+    <div className='login flx-center'>
+      <div className='login-container '>
+        <div className='login-left'>
+          <img src={leftLoginImg} alt='' className='login-left-img'/>
+        </div>
+        <div className='login-form'>
+          <div className='login-logo'>
+            <img src={logo} alt='' className='login-icon'/>
+            <span className='login-text'>React-Admin</span>
+          </div>
+          <div>
+            <Form
+              validateTrigger={['onBlur', 'onChange']}
+              name="basic"
+              initialValues={{ remember: false }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
+            >
+              <Form.Item
+                name="account"
+                initialValue={user.account}
+                rules={[
+                  { required: true, message: 'Please input your phone!' },
+                  { maxlen: 10 , message: 'Please input correct phone number!', validateTrigger: 'onBlur' }
+                ]}
+              >
+                <Input size="large" prefix={<UserOutlined />} placeholder='用户名'/>
+              </Form.Item>
+              <Form.Item
+                name="password"
+                initialValue={user.password}
+                rules={[
+                  { required: true, message: 'Please input your password!' },
+                ]}
+              >
+                <Input.Password size="large" prefix={<LockOutlined />} placeholder='密码'/>
+              </Form.Item>
+              <Form.Item wrapperCol={{ offset: 0, span: 24 }} className='flex f-j-c login-btns'>
+                <Button 
+                style={{marginRight: '20px', width: '48%'}} 
+                htmlType="button" 
+                onClick={onReset} 
+                size="large" 
+                icon=<RedoOutlined />
+                shape="round"
+                >Reset</Button>
+                <Button
+                style={{ width: '48%'}}
+                type="primary" 
+                htmlType="submit"
+                shape="round"
+                size="large" 
+                icon=<UserOutlined />
+                >Login</Button>
+              </Form.Item>
+            </Form>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

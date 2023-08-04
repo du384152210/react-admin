@@ -17,15 +17,15 @@ export default function AddDrawer(props) {
   }
   const addMenuApi = async()=> {
     let obj = {
-      id: 19,
-      "parent_id": 14, //父级
+      // id: 17,
+      "parent_id": 16, //父级
       "level": 2, //级别
-      "path": "/component/tree", //路由
-      "name": "tree", //组件名
-      "component": "/component/tree/index", //组件路劲
+      "path": "/dashboard/viewTwo", //路由
+      "name": "viewTwo", //组件名
+      "component": "/dashboard/viewTwo/index", //组件路劲
       "meta": {
         "icon": "AlignLeftOutlined", //icon图标
-        "title": "树形组件", //标题
+        "title": "数据视图", //标题
         "isLink": false, //是否跳转（true：是；false：否）
         "isHide": false, //是否隐藏（true：是；false：否）；
         "isFull": true, //是否填充（true：是；false：否）
@@ -35,12 +35,12 @@ export default function AddDrawer(props) {
       "auth_botton": [
       "add"
       ], //按钮权限
-      "label": "树形组件", //label 值
+      "label": "数据视图", //label 值
       "is_show": 1, //是否展示（1：显示；2：隐藏）
       "sort": 99 //排序（默认99）
       }
-      const res = await editMenu({data: obj})
-    // const res = await addMenu({data: obj})
+      // const res = await editMenu({data: obj})
+    const res = await addMenu({data: obj})
     // console.log(res);
   }
   return (

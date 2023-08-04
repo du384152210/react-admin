@@ -3,6 +3,9 @@ $warningColor: #faad14;
 $errorColor: #ff4d4f;
 $gray: #dddddd;
 
+#root {
+  height: 100vh;
+}
 body {
   margin: 0;
   padding: 0;
@@ -11,6 +14,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
 .t-c {
@@ -39,6 +43,9 @@ body {
 }
 .f-wrap {
   flex-wrap: wrap;
+}
+.fw-b {
+  font-weight: bold;
 }
 p {
   padding: 0;
@@ -93,6 +100,30 @@ p {
   box-shadow: 14px 10px 10px 10px #d9d9d9;
 }
 
+.ant-descriptions_table {
+  border-collapse: collapse;
+  width: 100%;
+  text-indent: initial;
+  border-spacing: 2px;
+  border-color: gray;
+  .ant-descriptions_cell {
+    padding: 8px 11px;
+    border: 1px solid #ebeef5;
+  }
+  .ant-descriptions_label {
+    
+    font-weight: 700;
+    color: #606266;
+    width: 200px;
+    background: #f5f7fa;
+  }
+  .ant-descriptions_content {
+    color: #303133;
+  }
+}
 .ant-space {
   flex-wrap: wrap;
+}
+.ant-divider {
+  margin: 16px 0;
 }

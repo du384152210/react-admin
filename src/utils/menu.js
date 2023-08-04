@@ -60,6 +60,7 @@ function initTree (list, ...arg) {
 
 /**
  * @description 初始化selectTree
+ * @param {*} arg  title,value,children
  */
 function initSelectTree (list, ...arg) {
   return list && list.map(item => {
