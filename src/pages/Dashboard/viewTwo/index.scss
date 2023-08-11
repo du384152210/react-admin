@@ -55,4 +55,35 @@
       color: #888;
     }
   }
+  .n-list {
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+    height: 400px;
+    overflow: auto;
+    .n-list-item {
+      width: 100%;
+      display: flex;
+      padding: 12px 0;
+      flex-wrap: nowrap;
+      align-items: center;
+      border-bottom: 1px solid #dddddd;
+      .n-list-item_prefix {
+        margin-right: 20px;
+        .n-avatar {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+        }
+      }
+      .ant-progress-line {
+        margin-bottom: 0;
+        .ant-progress-bg {
+          height: 15px!important;
+        }
+      }
+    }
+  }
+  
 }

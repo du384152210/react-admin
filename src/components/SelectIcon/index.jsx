@@ -13,7 +13,7 @@ export default function SelectIcon(props) {
     setIconList(filter(e.target.value))
   }
   const handleSelIcon = (key) => {
-    props.close(key)
+    props.onClose(key)
   }
   const onclose = () => {
     props.onClose()

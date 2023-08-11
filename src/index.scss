@@ -16,7 +16,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
 }
-
+h1 {
+  padding: 12px 0;
+  margin: 0;
+}
 .t-c {
   text-align: center;
 }
@@ -44,12 +47,18 @@ body {
 .f-wrap {
   flex-wrap: wrap;
 }
+.flex1 {
+  flex: 1;
+}
 .fw-b {
   font-weight: bold;
 }
-p {
+p,ul,ol {
   padding: 0;
   margin: 0;
+}
+.c-9 {
+  color: #999999;
 }
 .c-gray {
   color: $gray!important;

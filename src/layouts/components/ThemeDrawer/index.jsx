@@ -50,7 +50,7 @@ export default function ThemeDrawer() {
             }
           </div>
         </Tooltip>
-        <Tooltip title="横向">
+        <Tooltip title="纵向">
           <div className={['layout-item ','layout-transverse ', layout === 'transverse' ? 'is-active': ''].join('')} onClick={() => setLayout('transverse')}>
             <div className="layout-dark"></div>
             <div className="layout-content"></div>

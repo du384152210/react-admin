@@ -30,7 +30,6 @@ export default function SlectIconPage() {
             </tr>
           </table>
       </Card>
-      
       <SelectIcon show={show} onClose={handleClose}/>
     </div>
     

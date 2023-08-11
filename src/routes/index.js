@@ -1,39 +1,49 @@
 
-// import { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthorComponent } from '@/components/AuthComponent';
 import DRoutes from './dynamicRouter';
+import Loading from '@/components/Loading';
 
-// 按需导入组件
-// const Home = lazy(() => import('@/pages/Home'));
-// const Login = lazy(() => import('@/pages/Login'));
-// const Account = lazy(() => import('@/pages/Account'));
-// const AccountEdit = lazy(() => import('@/pages/Account/edit'));
-// const ViewPart = lazy(() => import('@/pages/ViewPart'));
-// const Cate = lazy(() => import('@/pages/Product/Cate'));
-// const Layouts = lazy(() => import('@/layouts'));
-// const Role = lazy(() => import('@/pages/Auth/Role'));
-// const MenuMange = lazy(() => import('@/pages/System/MenuMange'));
-// const SelIconPage = lazy(() => import('@/pages/component/selectIcon'));
 
 import Home from '@/pages/Home';
 import Login from '@/pages/Login';
-import ViewOne from '@/pages/Dashboard/viewOne';
-import ViewTwo from '@/pages/Dashboard/viewTwo';
 import Layouts from '@/layouts';
-import Role from '@/pages/Auth/Role';
-import MenuMange from '@/pages/System/MenuMange';
-import SelIconPage from '@/pages/component/selectIcon';
-import Tree from '@/pages/component/tree';
+// import ViewOne from '@/pages/Dashboard/viewOne';
+// import ViewTwo from '@/pages/Dashboard/viewTwo';
+// import Role from '@/pages/Auth/Role';
+// import MenuMange from '@/pages/System/MenuMange';
+// import SelIconPage from '@/pages/component/selectIcon';
+// import Tree from '@/pages/component/tree';
+
+// const Home = lazy(() =>import('@/pages/Home'));
+// const Login = lazy(() =>import('@/pages/Login'));
+// const Layouts = lazy(() =>import('@/layouts'));
+const ViewOne = lazy(() =>import('@/pages/Dashboard/viewOne'));
+const ViewTwo = lazy(() =>import('@/pages/Dashboard/viewTwo'));
+const Role = lazy(() =>import('@/pages/Auth/Role'));
+const MenuMange = lazy(() =>import('@/pages/System/MenuMange'));
+const SelIconPage = lazy(() =>import('@/pages/component/selectIcon'));
+const Tree = lazy(() =>import('@/pages/component/tree'));
+const UploadPage = lazy(() => import('@/pages/component/upload'))
+
+const lazyLoad = (children) => {
+  return (
+      <Suspense fallback={<Loading />}>
+        {children}
+      </Suspense>
+  )
+}
 
 let routeDictionary = {
-  'home': <Home />,
-  'viewOne': <ViewOne />,
-  'viewTwo': <ViewTwo/>,
-  'listTable': <Role />,
-  'selectIcon': <SelIconPage />,
-  'tree': <Tree />,
-  'menuMange': <MenuMange />,
+  'home': lazyLoad(<Home />),
+  'viewOne': lazyLoad(<ViewOne />),
+  'viewTwo': lazyLoad(<ViewTwo/>),
+  'listTable': lazyLoad(<Role />),
+  'selectIcon': lazyLoad(<SelIconPage />),
+  'tree': lazyLoad(<Tree />),
+  'menuMange': lazyLoad(<MenuMange />),
+  'upload': lazyLoad(<UploadPage/>)
 }
 
 const renderRoutes = (routes) => {
@@ -50,7 +60,6 @@ const renderRoutes = (routes) => {
 }
 
 const Router = () => {
-
   return (
     <Routes>
       <Route path='/' element={<AuthorComponent><Layouts/></AuthorComponent>}>

@@ -20,7 +20,7 @@ export default function TreePage() {
     <Row gutter={[16,16]} style={{height: '100%'}}>
       {contextHolder}
       <Col span={6}>
-        <Card style={{height: '100%'}}>
+        <Card style={{height: '100%'}} size='small'>
           <Divider className='tree-title'>树形列表(单选)</Divider>
           <TreeCom 
           treeData={defaultData}
@@ -29,7 +29,7 @@ export default function TreePage() {
         </Card>
       </Col>
       <Col span={6}>
-        <Card style={{height: '100%'}}>
+        <Card style={{height: '100%'}} size='small'>
           <Divider className='tree-title'>树形列表(多选)</Divider>
           <TreeCom 
           treeData={defaultData} 
@@ -39,7 +39,7 @@ export default function TreePage() {
         </Card>
       </Col>
       <Col span={12}>
-        <Card style={{height: '100%'}}>
+        <Card style={{height: '100%'}} size='small'>
           <h1 className='t-c' style={{fontSize: '30px'}}>树形筛选器 🍓🍇🍈🍉</h1>
           <p className='fw-b' style={{fontSize: '20px', marginBottom: '20px'}}>配置项 📚</p>
           <table className='ant-descriptions_table'>
