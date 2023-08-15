@@ -85,5 +85,11 @@
       }
     }
   }
-  
+  .rank-list {
+    height: 503px;
+    overflow: auto;
+  }
+  .demo-loadmore-list {
+    min-height: 450px;
+  }
 }

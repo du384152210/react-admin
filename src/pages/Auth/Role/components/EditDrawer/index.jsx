@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState} from 'react';
 import { Drawer, Form, Input, Space, Tree, Checkbox, Divider, Button } from 'antd';
 import './index.scss'
 
-
 // 样式
 const layout = {
   labelCol: {

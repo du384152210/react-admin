@@ -24,8 +24,9 @@ const ViewTwo = lazy(() =>import('@/pages/Dashboard/viewTwo'));
 const Role = lazy(() =>import('@/pages/Auth/Role'));
 const MenuMange = lazy(() =>import('@/pages/System/MenuMange'));
 const SelIconPage = lazy(() =>import('@/pages/component/selectIcon'));
-const Tree = lazy(() =>import('@/pages/component/tree'));
-const UploadPage = lazy(() => import('@/pages/component/upload'))
+const TreePage = lazy(() =>import('@/pages/component/tree'));
+const UploadPage = lazy(() => import('@/pages/component/upload'));
+const Editorpage = lazy(() => import('@/pages/component/editor'));
 
 const lazyLoad = (children) => {
   return (
@@ -41,9 +42,10 @@ let routeDictionary = {
   'viewTwo': lazyLoad(<ViewTwo/>),
   'listTable': lazyLoad(<Role />),
   'selectIcon': lazyLoad(<SelIconPage />),
-  'tree': lazyLoad(<Tree />),
+  'tree': lazyLoad(<TreePage />),
   'menuMange': lazyLoad(<MenuMange />),
-  'upload': lazyLoad(<UploadPage/>)
+  'upload': lazyLoad(<UploadPage/>),
+  'editor': lazyLoad(<Editorpage/>)
 }
 
 const renderRoutes = (routes) => {

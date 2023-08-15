@@ -1,7 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import './index.scss';
 import { Button, Divider, Input, Form, InputNumber, Radio, Switch, TreeSelect, Drawer } from 'antd';
-import { addMenu, editMenu } from '@/API/testApi';
+import { addMenu } from '@/API/testApi';
 // import {AlignLeftOutlined, FileAddOutlined} from '@ant-design/icons';
 // import { useSelector } from 'react-redux';
 // import {initTree, initSelectTree} from '@/utils'
@@ -17,15 +17,15 @@ export default function AddDrawer(props) {
   }
   const addMenuApi = async()=> {
     let obj = {
-      // id: 17,
+      id: 23,
       "parent_id": 14, //父级
       "level": 2, //级别
-      "path": "/component/upload", //路由
-      "name": "upload", //组件名
-      "component": "/component/upload/index", //组件路劲
+      "path": "/component/editor", //路由
+      "name": "editor", //组件名
+      "component": "/component/editor/index", //组件路劲
       "meta": {
         "icon": "AlignLeftOutlined", //icon图标
-        "title": "文件上传", //标题
+        "title": "富文本编辑器", //标题
         "isLink": false, //是否跳转（true：是；false：否）
         "isHide": false, //是否隐藏（true：是；false：否）；
         "isFull": true, //是否填充（true：是；false：否）
@@ -35,14 +35,15 @@ export default function AddDrawer(props) {
       "auth_botton": [
       "add"
       ], //按钮权限
-      "label": "文件上传", //label 值
+      "label": "富文本编辑器", //label 值
       "is_show": 1, //是否展示（1：显示；2：隐藏）
       "sort": 99 //排序（默认99）
       }
       // const res = await editMenu({data: obj})
-    const res = await addMenu({data: obj})
+    // const res = await addMenu({data: obj})
     // console.log(res);
   }
+  
   return (
     <Drawer title='添加目录' width={600} open={show} className='menu-addDrawer' onClose={onclose}>
       <Form 

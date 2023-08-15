@@ -37,73 +37,73 @@ export default function SelectIcon(props) {
             <Empty /> : 
             <>
               <Divider>线框风格</Divider>
-          <div className='flex f-a-c f-wrap'>
-            {
-              Object.keys(iconsList).map((key) => {
-                if (key.includes('Outlined')) {
-                    let Com = Icons[key]
-                    return (
-                      <div className='icon-item' onClick={() => handleSelIcon(key)} key={key}>
-                        <Com style={{fontSize: '36px'}} className="icon-svg"></Com>
-                        <span className='icon-name'>{key}</span>
-                      </div>
-                    )
-                }
-                return <></>
-              })
-            }
-          </div>
-          <Divider>实底风格</Divider>
-          <div className='flex f-a-c f-wrap'>
-            {
-              Object.keys(iconsList).map((key) => {
-                if (key.includes('Filled')) {
-                    let Com = Icons[key]
-                    return (
-                      <div className='icon-item' onClick={() => handleSelIcon(key)} key={key}>
-                        <Com style={{fontSize: '36px'}} className="icon-svg"></Com>
-                        <span className='icon-name'>{key}</span>
-                      </div>
-                    )
-                }
-                return <></>
-              })
-            }
-          </div>
-          <Divider>圆形实底风格</Divider>
-          <div className='flex f-a-c f-wrap'>
-            {
-              Object.keys(iconsList).map((key) => {
-                if (key.includes('CircleFilled')) {
-                    let Com = Icons[key]
-                    return (
-                      <div className='icon-item' onClick={() => handleSelIcon(key)} key={key}>
-                        <Com style={{fontSize: '36px'}} className="icon-svg"></Com>
-                        <span className='icon-name'>{key}</span>
-                      </div>
-                    )
-                }
-                return <></>
-              })
-            }
-          </div>
-          <Divider>双色风格</Divider>
-          <div className='flex f-a-c f-wrap'>
-            {
-              Object.keys(iconsList).map((key) => {
-                if (key.includes('TwoTone') && !key.includes('Color')) {
-                    let Com = Icons[key]
-                    return (
-                      <div className='icon-item' onClick={() => handleSelIcon(key)} key={key}>
-                        <Com style={{fontSize: '36px'}} className="icon-svg"></Com>
-                        <span className='icon-name'>{key}</span>
-                      </div>
-                    )
-                }
-                return <></>
-              })
-            }
-          </div>
+            <div className='flex f-a-c f-wrap'>
+              {
+                Object.keys(iconsList).map((key) => {
+                  if (key.includes('Outlined')) {
+                      let Com = Icons[key]
+                      return (
+                        <div className='icon-item' onClick={() => handleSelIcon(key)} key={key}>
+                          <Com style={{fontSize: '36px'}} className="icon-svg"></Com>
+                          <span className='icon-name'>{key}</span>
+                        </div>
+                      )
+                  }
+                  return null
+                })
+              }
+            </div>
+            <Divider>实底风格</Divider>
+            <div className='flex f-a-c f-wrap'>
+              {
+                Object.keys(iconsList).map((key) => {
+                  if (key.includes('Filled')) {
+                      let Com = Icons[key]
+                      return (
+                        <div className='icon-item' onClick={() => handleSelIcon(key)} key={key}>
+                          <Com style={{fontSize: '36px'}} className="icon-svg"></Com>
+                          <span className='icon-name'>{key}</span>
+                        </div>
+                      )
+                  }
+                  return null
+                })
+              }
+            </div>
+            <Divider>圆形实底风格</Divider>
+            <div className='flex f-a-c f-wrap'>
+              {
+                Object.keys(iconsList).map((key) => {
+                  if (key.includes('CircleFilled')) {
+                      let Com = Icons[key]
+                      return (
+                        <div className='icon-item' onClick={() => handleSelIcon(key)} key={key}>
+                          <Com style={{fontSize: '36px'}} className="icon-svg" ></Com>
+                          <span className='icon-name'>{key}</span>
+                        </div>
+                      )
+                  }
+                  return null
+                })
+              }
+            </div>
+            <Divider>双色风格</Divider>
+            <div className='flex f-a-c f-wrap'>
+              {
+                Object.keys(iconsList).map((key) => {
+                  if (key.includes('TwoTone') && !key.includes('Color')) {
+                      let Com = Icons[key]
+                      return (
+                        <div className='icon-item' onClick={() => handleSelIcon(key)} key={key}>
+                          <Com style={{fontSize: '36px'}} className="icon-svg" ></Com>
+                          <span className='icon-name'>{key}</span>
+                        </div>
+                      )
+                  }
+                  return null
+                })
+              }
+            </div>
             </>
           }
       </div>

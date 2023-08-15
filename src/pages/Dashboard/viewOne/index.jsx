@@ -1,12 +1,13 @@
-import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
+import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
+import { Card, Row, Col, List, Badge } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import Map from '@/components/Map';
+import Pie from '@/components/Pie';
+import LineBar from '@/components/LineBar';
+import './index.scss';
+import { useSelector } from 'react-redux';
 
-import { Card, Row, Col, List, Badge } from 'antd'
-import { UserOutlined } from '@ant-design/icons'
-import Map from '@/components/Map'
-import Pie from '@/components/Pie'
-import LineBar from '@/components/LineBar'
-import './index.scss'
 
 const mapList = [{"name":"北京","value":2000},{"name":"福建","value":4000}]
 const navList = [
@@ -112,6 +113,7 @@ const ListData = [
 ]
 
  function ViewPart() {
+  const {cardSize} = useSelector((state) => state.global);
   const [barIdx, setbarIdx] = useState(0)
   const [bartabKey, setbartabKey] = useState('1')
   const [lineData, setlineData] = useState(ldata[barIdx])
@@ -129,7 +131,7 @@ const ListData = [
     <div>
       <Row gutter={[16,16]}>
         <Col span={8}>
-          <Card title="快捷入口" size="small">
+          <Card title="快捷入口" size={cardSize}>
             <Row gutter={[16, { xs: 8, sm: 16, md: 16, lg: 16 }]}>
               {
                 navList.map(item => {
@@ -149,7 +151,7 @@ const ListData = [
           </Card>
         </Col>
         <Col span={8}>
-          <Card title="数据统计" size="small">
+          <Card title="数据统计" size={cardSize}>
             <Row gutter={[16, { xs: 8, sm: 16, md: 16, lg: 16 }]}>
               {
                 dataList.map(item => {
@@ -169,7 +171,7 @@ const ListData = [
           </Card>
         </Col>
         <Col span={8}>
-          <Card title="订单统计" size="small">
+          <Card title="订单统计" size={cardSize}>
             <Row gutter={[16, { xs: 8, sm: 16, md: 16, lg: 16 }]}>
               {
                 orderList.map(item => {
@@ -202,12 +204,12 @@ const ListData = [
               }
             </div>
           } 
-          size="small" style={{overflow:'hidden', width: '100%'}}>
-              <LineBar data={lineData} style={{width:'100%', minHeight: '400px'}}/>
+          size={cardSize} style={{overflow:'hidden', width: '100%'}}>
+            <LineBar data={lineData} style={{width:'100%', minHeight: '400px'}}/>
           </Card>
         </Col>
         <Col span={12}>
-          <Card size="small" title="排行" style={{overflow:'hidden', width: '100%'}}>
+          <Card size={cardSize} title="排行" style={{overflow:'hidden', width: '100%'}}>
           <List
             dataSource={ListData}
             style={{minHeight: '400px'}}
@@ -255,12 +257,12 @@ const ListData = [
           </Card>
         </Col>
         <Col span={12}>
-          <Card size="small" title="全国用户分布" style={{overflow:'hidden', width: '100%'}}>
+          <Card size={cardSize} title="全国用户分布" style={{overflow:'hidden', width: '100%'}}>
               <Map data={mapList} style={{width:'100%', minHeight: '400px'}}/>
           </Card>
         </Col>
         <Col span={12}>
-          <Card size="small" title="用户统计" style={{overflow:'hidden', width: '100%'}}>
+          <Card size={cardSize} title="用户统计" style={{overflow:'hidden', width: '100%'}}>
               <Pie data={pieData} style={{width:'100%', minHeight: '400px'}}/>
           </Card>
         </Col>

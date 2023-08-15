@@ -15,7 +15,11 @@ const globalSlice = createSlice({
     // 面包屑导航
     breadcrumb: true,
     // settingdraw
-    settingDrawer: false
+    settingDrawer: false,
+    // 表格size
+    tableSize: 'middle',
+    // 卡片大小
+    cardSize: 'small'
   },
   reducers: {
     setGlobalState: (state, {payload}) => {

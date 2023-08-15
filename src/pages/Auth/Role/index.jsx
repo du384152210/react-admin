@@ -5,8 +5,10 @@ import { roleList } from '@/API/testApi/';
 import EditDrawer from './components/EditDrawer';
 import { roleConf } from '@/API/testApi';
 import { initTree } from '@/utils';
+import { useSelector } from 'react-redux';
 
 export default function Role() {
+  const {cardSize, tableSize} = useSelector((state) => state.global);
   const columns = [
     {
       title: '角色编号',
@@ -92,15 +94,15 @@ export default function Role() {
     <Row gutter={[16,16]}>
       <EditDrawer data={editObj} show={drawShow} handleClose={drawClose} tree={treeData}/>
       <Col span={24}>
-        <Card>
-        <Space style={{flexWrap: 'wrap'}}>
-          <Input style={{ width: 200 }} placeholder="Basic usage" />
-          <Button type="primary" shape="circle" icon={<SearchOutlined />} />
-        </Space>
+        <Card size={cardSize}>
+          <Space style={{flexWrap: 'wrap'}}>
+            <Input style={{ width: 200 }} placeholder="Basic usage" />
+            <Button type="primary" shape="circle" icon={<SearchOutlined />} />
+          </Space>
         </Card>
       </Col>
-      <Col span={24}>
-        <Card>
+      <Col span={24} >
+        <Card size={cardSize}>
           <div className='flex f-j-s f-a-c'>
             <Button type="primary"  icon={<PlusCircleOutlined />} onClick={handleAddRole}>添加角色</Button>
           </div>
@@ -109,7 +111,7 @@ export default function Role() {
             columns={columns}
             dataSource={list}
             loading={loading}
-            size="middle"
+            size={tableSize}
             rowSelection
             scroll={{
               y: 600,

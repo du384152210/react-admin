@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './index.scss';
-import { Row, Col, Card, Button, Statistic, Progress, Avatar, Image, Table, Tag, Badge } from 'antd';
+import { Row, Col, Card, Button, Statistic, Progress, Avatar, Image, Table, Tag, Badge, List, Skeleton } from 'antd';
 import { UsergroupAddOutlined, ArrowUpOutlined, ArrowDownOutlined, CaretUpOutlined, 
   FileProtectOutlined, CaretDownOutlined, TransactionOutlined,DollarOutlined } from '@ant-design/icons';
 import CountUp from 'react-countup';
 import avatar from '@/assets/images/avatar.gif';
 import goodImg from '@/assets/images/logo-react.png';
 import MixLineBar from '@/components/Echart/MixLineBar';
+import { useSelector } from 'react-redux';
 
 const formatter = (value) => <CountUp end={value} separator="," />
 let userList = []
@@ -95,12 +96,71 @@ for(let i=0; i< 20; i++) {
   })
 }
 
+const count = 3;
+const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
+
 export default function ViewTwo() {
+  // size
+  const {cardSize, tableSize} = useSelector((state) => state.global);
+
+
+  const [initLoading, setInitLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [list, setList] = useState([]);
+  useEffect(() => {
+    fetch(fakeDataUrl)
+      .then((res) => res.json())
+      .then((res) => {
+        setInitLoading(false);
+        setData(res.results);
+        setList(res.results);
+      });
+  }, []);
+  const onLoadMore = () => {
+    setLoading(true);
+    setList(
+      data.concat(
+        [...new Array(count)].map(() => ({
+          loading: true,
+          name: {},
+          picture: {},
+        })),
+      ),
+    );
+    // 请求消费排行列表
+    fetch(fakeDataUrl)
+      .then((res) => res.json())
+      .then((res) => {
+        const newData = data.concat(res.results);
+        setData(newData);
+        setList(newData);
+        setLoading(false);
+        // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
+        // In real scene, you can using public method of react-virtualized:
+        // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
+        window.dispatchEvent(new Event('resize'));
+      });
+  };
+  const loadMore =
+    !initLoading && !loading ? (
+      <div
+        style={{
+          textAlign: 'center',
+          marginTop: 12,
+          height: 32,
+          lineHeight: '32px',
+        }}
+      >
+        <Button onClick={onLoadMore}>loading more</Button>
+      </div>
+    ) : null;
+
 
   return (
     <Row gutter={[16,16]} className='viewTwo'>
       <Col span={6}>
-        <Card size='small'>
+        <Card size={cardSize}>
           <div className='flex f-j-s f-a-c card-item-t'>
             <div className='flex f-a-c'>
               <div className='icon-circle icon-one'>
@@ -130,7 +190,7 @@ export default function ViewTwo() {
         </Card>
       </Col>
       <Col span={6}>
-        <Card size='small'>
+        <Card size={cardSize}>
           <div className='flex f-j-s f-a-c card-item-t'>
             <div className='flex f-a-c'>
               <div className='icon-circle icon-two'>
@@ -159,7 +219,7 @@ export default function ViewTwo() {
         </Card>
       </Col>
       <Col span={6}>
-        <Card size='small'>
+        <Card size={cardSize}>
           <div className='flex f-j-s f-a-c card-item-t'>
             <div className='flex f-a-c'>
               <div className='icon-circle icon-three'>
@@ -190,7 +250,7 @@ export default function ViewTwo() {
         </Card>
       </Col>
       <Col span={6}>
-        <Card size='small'>
+        <Card size={cardSize}>
           <div className='flex f-j-s f-a-c card-item-t'>
             <div className='flex f-a-c'>
               <div className='icon-circle icon-four'>
@@ -221,12 +281,12 @@ export default function ViewTwo() {
         </Card>
       </Col>
       <Col span={14}>
-        <Card size='small' title="订单统计">
+        <Card size={cardSize} title="订单统计">
           <MixLineBar  style={{width:'100%', minHeight: '400px'}}/>
         </Card>
       </Col>
       <Col span={10}>
-        <Card size='small' title="用户分析">
+        <Card size={cardSize} title="用户分析">
           <ul className='n-list'>
             {
               userList.map(item => <li className='n-list-item' key={item.id}>
@@ -261,12 +321,39 @@ export default function ViewTwo() {
         </Card>
       </Col>
       <Col span={16}>
-        <Card title='最新订单' size='small' >
-          <Table columns={columns} dataSource={tableData} scroll={{y:400}} ellipsis='true' size="middle"/>
+        <Card title='最新订单' size={cardSize} >
+          <Table columns={columns} dataSource={tableData} scroll={{y:400}} ellipsis='true' size={tableSize}/>
         </Card>
       </Col>
       <Col span={8} >
-        <Card title="消费排行" size="small"></Card>
+        <Card title="消费排行" size={cardSize}>
+          <div className='rank-list'>
+          <List
+            className="demo-loadmore-list"
+            loading={initLoading}
+            itemLayout="horizontal"
+            loadMore={loadMore}
+            dataSource={list}
+            renderItem={(item) => (
+              <List.Item
+                // actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
+              >
+                <Skeleton avatar title={false} loading={item.loading} active>
+                  <List.Item.Meta
+                    avatar={<Avatar src={item.picture.large} />}
+                    title={<a href="https://ant.design">{item.name?.last}</a>}
+                    description="IP归属地：北京市/东城区"
+                  />
+                  <div>
+                    <Tag color='#18a058'>￥69800.00</Tag>
+                  </div>
+                </Skeleton>
+              </List.Item>
+            )}
+          />
+          </div>
+        
+        </Card>
       </Col>
     </Row>
   )
