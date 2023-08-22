@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState} from 'react';
 import { Drawer, Form, Input, Space, Tree, Checkbox, Divider, Button } from 'antd';
-import './index.scss'
+import './index.scss';
 
 // 样式
 const layout = {
@@ -131,7 +131,6 @@ export default function EditDrawer(props) {
         <Button>重置</Button>
         <Button type='primary'>添加</Button>
         </Space>
-        
       </div>
     </Drawer>
   )

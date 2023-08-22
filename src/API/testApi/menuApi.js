@@ -7,7 +7,6 @@ const addMenu = (config => {
     ...config
   })
 })
-
 const editMenu = (config => {
   return http({
     url: '/admin/menus/update',
@@ -15,8 +14,17 @@ const editMenu = (config => {
     ...config
   })
 })
+const deleteMenu = (config => {
+  return http({
+    url: '/admin/menus/delete',
+    method: 'POST',
+    ...config
+  })
+})
+
 
 export {
   addMenu,
-  editMenu
+  editMenu,
+  deleteMenu
 }

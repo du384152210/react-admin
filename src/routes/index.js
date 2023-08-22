@@ -26,13 +26,17 @@ const MenuMange = lazy(() =>import('@/pages/System/MenuMange'));
 const SelIconPage = lazy(() =>import('@/pages/component/selectIcon'));
 const TreePage = lazy(() =>import('@/pages/component/tree'));
 const UploadPage = lazy(() => import('@/pages/component/upload'));
-const Editorpage = lazy(() => import('@/pages/component/editor'));
+const EditorPage = lazy(() => import('@/pages/component/editor'));
+const FormPage = lazy(() => import('@/pages/component/form'));
+const TablePage = lazy(() => import('@/pages/component/table'));
+const SelectPage = lazy(() => import('@/pages/component/select'));
+const StepsPage = lazy(() => import('@/pages/component/steps'));
 
 const lazyLoad = (children) => {
   return (
-      <Suspense fallback={<Loading />}>
-        {children}
-      </Suspense>
+    <Suspense fallback={<Loading />}>
+      {children}
+    </Suspense>
   )
 }
 
@@ -45,7 +49,11 @@ let routeDictionary = {
   'tree': lazyLoad(<TreePage />),
   'menuMange': lazyLoad(<MenuMange />),
   'upload': lazyLoad(<UploadPage/>),
-  'editor': lazyLoad(<Editorpage/>)
+  'editor': lazyLoad(<EditorPage/>),
+  'form': lazyLoad(<FormPage/>),
+  'table': lazyLoad(<TablePage/>),
+  'select': lazyLoad(<SelectPage/>),
+  'steps': lazyLoad(<StepsPage/>)
 }
 
 const renderRoutes = (routes) => {

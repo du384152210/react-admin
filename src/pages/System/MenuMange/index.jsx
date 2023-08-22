@@ -1,29 +1,29 @@
 import React, { useState, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom'
 import './index.scss';
 import AddDrawer from './components/AddDrawer';
-import SelectIcon from '@/components/SelectIcon'
-import { Row, Col, Card, Space, Button, Divider, Input, Form, InputNumber, Radio, Switch, TreeSelect } from 'antd';
+import SelectIcon from '@/components/SelectIcon';
+import { Row, Col, Card, Space, Button, Divider, Input, Form, InputNumber, Radio, Switch, TreeSelect, message, Modal } from 'antd';
 import { FileAddOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { initTree, initSelectTree } from '@/utils';
+import { initTree, initSelectTree, formatDate } from '@/utils';
 import TreeCom from '@/components/TreeCom';
-import { editMenu } from '@/API/testApi';
+import { editMenu, addMenu, deleteMenu } from '@/API/testApi';
 import { getAuthMenuList } from '@/store/modules/auth';
+// import { ExclamationCircleFilled } from '@ant-design/icons'
 
-
+// const { confirm } = Modal;
+const key = 'updatable';
 export default function MenuMange() {
   let allData = [];
   const editForm = useRef(null);
   const menuList = useSelector(state => state.auth.authMenuList);
-  const {cardSize} = useSelector((state) => state.global);
+  const { cardSize } = useSelector((state) => state.global);
   const defaultData = initTree(menuList, 'id','label','children'); // 初始化菜单数组
   const [showDrawer, setShowDrawer] = useState(false); // drawer显示
-  const [showIcon, setShowIconr] = useState(false); // Icon选择显示
+  const [showIcon, setShowIcon] = useState(false); // Icon选择显示
   const selectTreeData = initSelectTree(defaultData, 'key', 'title', 'children');
   const [editObj, setEditObj] = useState({});
-  const navigate = useNavigate();
-  const location = useLocation();
+
   const dispatch = useDispatch();
 
   generateList(menuList);
@@ -32,10 +32,10 @@ export default function MenuMange() {
     setShowDrawer(val);
   }
   const handleSelIcon = () => {
-    setShowIconr(true);
+    setShowIcon(true);
   }
   const onCloseIconModel = (key) => {
-    setShowIconr(false);
+    setShowIcon(false);
     if(key) editForm.current.setFieldsValue({
       icon: key
     });
@@ -77,19 +77,29 @@ export default function MenuMange() {
         isLink: data.isLink,
         isAffix: false,
         isKeepAlive: true,
-        title: data.title
-      }
+        title: data.title,
+      },
+      updated_time: formatDate(new Date())
     }
     let newObj = Object.assign({}, editObj, obj)
     setEditObj({...newObj})
     editMenuApi(newObj);
   }
-  const editMenuApi = async (data)=> {
-    const res = await editMenu({data})
-    // window.location.reload()
-    await dispatch(getAuthMenuList());
-    // navigate(location.pathname, {replace: true})
-    console.log(res);
+  const handleDeleteMenu = () => {
+    message.error('权限不足');
+    return;
+    // confirm({
+    //   title: '是否确认删除?',
+    //   icon: <ExclamationCircleFilled />,
+    //   content: '',
+    //   onOk() {
+    //     deleteMenuApi(editObj.id);
+    //   },
+    //   onCancel() {
+    //     console.log('取消');
+    //   },
+    // });
+    
   }
   function generateList (menuList) {
     for (let i = 0; i < menuList.length; i++) {
@@ -102,6 +112,37 @@ export default function MenuMange() {
       }
     }
   };
+  //---------------------请求接口 api----------------------
+  const editMenuApi = async (data)=> {
+    message.open({key, type: 'loading',content: '更新中...'})
+    const res = await editMenu({data})
+    if(res.code === 200) {
+      message.open({key, type: 'success',content: res.msg})
+      await dispatch(getAuthMenuList());
+    }else {
+      message.open({key, type: 'error', content: res.msg})
+    }
+  }
+  const addMenuApi = async (data)=> {
+    const res = await addMenu({data})
+    if(res.code === 200) {
+      message.open({key, type: 'success',content: res.msg})
+      await dispatch(getAuthMenuList());
+      setShowDrawer(false);
+    }else {
+      message.open({key, type: 'error', content: res.msg})
+    }
+  }
+  const deleteMenuApi = async (id) => {
+    const res = await deleteMenu({data: {id}})
+    if(res.code === 200) {
+      message.open({key, type: 'success',content: res.msg})
+      await dispatch(getAuthMenuList());
+    }else {
+      message.open({key, type: 'error', content: res.msg})
+    }
+  }
+  
   
   return (
     <Row gutter={[16,16]}>
@@ -109,7 +150,7 @@ export default function MenuMange() {
         <Card size={cardSize}>
           <div className='MenuMange-left'>
             <Space>
-              <Button type="primary" icon=<FileAddOutlined /> onClick={() => onCloseDrawer(true)}>添加菜单</Button>
+              <Button type="primary" icon=<FileAddOutlined /> onClick={() => onCloseDrawer(true)} >添加菜单</Button>
             </Space>
           </div>
           <TreeCom 
@@ -119,8 +160,8 @@ export default function MenuMange() {
         </Card>
       </Col>
       <Col span={16}>
-        <Card title="编辑目录" 
-        extra={<Button type="link">删除目录</Button>}
+        <Card title={ editObj.parent_id ? '编辑菜单' : '编辑目录' }
+        extra={<Button type="link" disabled={!editObj.id} onClick={handleDeleteMenu}>{ editObj.parent_id ? '删除菜单' : '删除目录' }</Button>}
         size={cardSize}
         >
           <Form 
@@ -133,29 +174,53 @@ export default function MenuMange() {
             <Divider orientation="left" style={{marginTop: 0}}>基本设置</Divider>
             <Form.Item
               name="parent_id"
-              tooltip="This is a required field"
               label="上级目录"
             >
               <TreeSelect showSearch allowClear treeData={selectTreeData}/>
             </Form.Item>
             <div className='flex f-j-s item-row'>
-              <Form.Item name="title" label="标题" labelCol={{span:8}} wrapperCol={{span: 16,}} >
+              <Form.Item name="title" label="标题" 
+              labelCol={{span:8}} wrapperCol={{span: 16,}}
+              rules={[
+                { required: true, message: '请填写标题' },
+              ]}
+              >
                 <Input/>
               </Form.Item>
-              <Form.Item name="icon" label="图标名称" labelCol={{span:8}} wrapperCol={{span: 16}} >
+              <Form.Item name="icon" label="图标名称" 
+              labelCol={{span:8}} wrapperCol={{span: 16}}
+              rules={[
+                { required: true, message: '请选择图标' },
+              ]}
+              >
                 <Input onClick={handleSelIcon} readOnly/>
               </Form.Item>
             </div>
             <div className='flex f-j-s item-row'>
-              <Form.Item name="name" label="组件名" tooltip="组件名称 如 authButton" labelCol={{span:8}} wrapperCol={{span: 16,}} >
+              <Form.Item name="name" label="组件名" tooltip="组件名称 如 authButton" 
+              labelCol={{span:8}} wrapperCol={{span: 16,}}
+              rules={[
+                { required: true, message: '请填写组件名' },
+              ]}
+              >
                 <Input/>
               </Form.Item>
-              <Form.Item name="component" label="组件路径" tooltip="组件路径 如 /auth/button/index" labelCol={{span:8}} wrapperCol={{span: 16,}} >
+              <Form.Item name="component" label="组件路径" tooltip="组件路径 如 /auth/button/index" 
+              labelCol={{span:8}} wrapperCol={{span: 16,}}
+              rules={[
+                { required: true, message: '请填写组件路径' },
+              ]}
+              >
                 <Input/>
               </Form.Item>
             </div>
             <div className='flex f-j-s item-row'>
-              <Form.Item name="path" label="路由" tooltip="路由path 如/auth/button" labelCol={{span:8}} wrapperCol={{span: 16,}} >
+              <Form.Item name="path" label="路由" tooltip="路由path 如/auth/button" 
+              labelCol={{span:8}} wrapperCol={{span: 16,}}
+              rules={[
+                { required: true, message: '请填写路由' },
+              ]}
+              >
                 <Input/>
               </Form.Item>
               <Form.Item name="sort" label="显示排序" labelCol={{span:8}} wrapperCol={{span: 16}} >
@@ -186,7 +251,7 @@ export default function MenuMange() {
           </Form>
         </Card>
       </Col>
-      <AddDrawer show={showDrawer} selectTreeData={selectTreeData} close={onCloseDrawer}/>
+      <AddDrawer show={showDrawer} selectTreeData={selectTreeData} close={onCloseDrawer} add={addMenuApi}/>
       <SelectIcon show={showIcon} onClose={onCloseIconModel}/>
     </Row>
   )

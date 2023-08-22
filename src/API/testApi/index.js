@@ -1,7 +1,7 @@
 import { login } from './loginApi';
 import { menus } from './homeApi';
 import { roleList, addRole, roleConf } from './roleApi';
-import { addMenu, editMenu } from './menuApi';
+import { addMenu, editMenu, deleteMenu } from './menuApi';
 
 export {
   login,
@@ -10,5 +10,6 @@ export {
   addRole,
   addMenu,
   editMenu,
-  roleConf
+  roleConf,
+  deleteMenu
 }

@@ -13,6 +13,15 @@ function getFlatMenuList(menuList) {
   return newMenuList.flatMap(item => [item, ...(item.children ? getFlatMenuList(item.children) : [])]);
 }
 
+function formatDate (time) {
+  let Y = time.getFullYear();
+  let M = time.getMonth()+1;
+  let D = time.getDate();
+  let h = time.getHours() > 10 ? time.getHours() : '0' + time.getHours();
+  let m = time.getMinutes() > 10 ? time.getMinutes() : '0' + time.getMinutes();
+  let s = time.getSeconds() > 10 ? time.getSeconds() : '0' + time.getSeconds();
+  return Y + '-' + M + '-' + D + ' ' + h +':' + m + ':' + s;
+}
 
 export {
   setToken,
@@ -21,5 +30,6 @@ export {
   getFlatMenuList,
   initMenu,
   initTree,
-  initSelectTree
+  initSelectTree,
+  formatDate
 }
