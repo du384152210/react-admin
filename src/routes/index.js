@@ -31,6 +31,7 @@ const FormPage = lazy(() => import('@/pages/component/form'));
 const TablePage = lazy(() => import('@/pages/component/table'));
 const SelectPage = lazy(() => import('@/pages/component/select'));
 const StepsPage = lazy(() => import('@/pages/component/steps'));
+const DisplayPage = lazy(() => import('@/pages/component/display'));
 
 const lazyLoad = (children) => {
   return (
@@ -53,7 +54,8 @@ let routeDictionary = {
   'form': lazyLoad(<FormPage/>),
   'table': lazyLoad(<TablePage/>),
   'select': lazyLoad(<SelectPage/>),
-  'steps': lazyLoad(<StepsPage/>)
+  'steps': lazyLoad(<StepsPage/>),
+  'display': lazyLoad(<DisplayPage/>),
 }
 
 const renderRoutes = (routes) => {

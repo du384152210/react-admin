@@ -1,4 +1,5 @@
 .home-bg {
+  position: relative;
   width: 100%;
   height: 100%;
   background: #fff;
@@ -6,5 +7,55 @@
   border: 1px solid #e4e7ed;
   img {
     width: 760px;
+  }
+  .date {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+}
+.wrapper {
+  width: 400px;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  padding: 5px;
+}
+.dateCell {
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 40px;
+    max-height: 40px;
+    background: transparent;
+    transition: background 300ms;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+  }
+  &:hover:before {
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+.today {
+  &:before {
+    border: 1px solid #dddddd;
+  }
+}
+.text {
+  position: relative;
+  z-index: 1;
+}
+.lunar, .current {
+  &:hover:before {
+    opacity: 0.8;
+  }
+  .lunar {
+    opacity: 0.9;
   }
 }
